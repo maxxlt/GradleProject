@@ -1,21 +1,23 @@
 package com.udacity.gradle.builditbigger;
 
-import android.support.test.espresso.Espresso;
+
 import android.support.test.espresso.IdlingRegistry;
-import android.support.test.espresso.IdlingResource;
+
 import static android.support.test.espresso.Espresso.onView;
 
 
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.idling.CountingIdlingResource;
-import android.support.test.espresso.matcher.ViewMatchers;
+
+import static android.support.test.espresso.action.ViewActions.click;
+
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.udacity.gradle.builditbigger.MainActivity;
-import com.udacity.gradle.builditbigger.R;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static org.hamcrest.Matchers.not;
+
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,19 +35,19 @@ public class TestData {
     private IdlingRegistry mRegistry = IdlingRegistry.getInstance();
 
     @Before
-    public void setUp(){
+    public void setUp() {
         mIdlingResource = mTestRule.getActivity().getmCountingIdlingResource();
         mRegistry.register(mIdlingResource);
     }
 
     @Test
-    public void testData(){
-        onView(ViewMatchers.withId(R.id.fragment_button)).perform(ViewActions.click());
-        onView(ViewMatchers.withId(R.id.display_text_tv)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+    public void testData() {
+        onView(withId(R.id.fragment_button)).perform(click());
+        onView(withId(R.id.display_text_tv)).check(matches(not(withText(""))));
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         mRegistry.unregister(mIdlingResource);
     }
 
